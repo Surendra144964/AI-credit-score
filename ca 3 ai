@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreditAI - Your Smart Credit Score Advisor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #6c5ce7;
+            --text-color: #2d3436;
+            --bg-color: #f5f6fa;
+            --card-color: #ffffff;
+            --header-color: #ffffff;
+            --footer-color: #2d3436;
+            --footer-text: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --text-color: #f5f6fa;
+            --bg-color: #1e272e;
+            --card-color: #2d3436;
+            --header-color: #2d3436;
+            --footer-color: #1e272e;
+            --footer-text: #f5f6fa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--header-color);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+            transform: rotate(30deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 80px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(74, 107, 255, 0.1) 0%, rgba(108, 92, 231, 0.1) 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--text-color);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 36px;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(74, 107, 255, 0.05) 0%, rgba(108, 92, 231, 0.05) 100%);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--card-color);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .author-info p {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-color);
+            color: var(--footer-text);
+            padding: 60px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: var(--footer-text);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-newsletter p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Sign In/Up Form */
+        .auth-form {
+            background-color: var(--card-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .auth-form h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+        }
+
+        .auth-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .auth-form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .form-toggle {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .form-toggle button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: underline;
+        }
+
+        /* Chatbot Styles */
+        #chatbotIcon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        #chatbotIcon:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        #chatbotIcon i {
+            color: white;
+            font-size: 24px;
+        }
+
+        #chatbotWindow {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            max-height: 500px;
+            background-color: var(--card-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .chatbot-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        #closeChatbot {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #chatbotMessages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chatbot-input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background-color: var(--card-color);
+        }
+
+        #chatbotInput {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        #sendChatbotMessage {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #sendChatbotMessage:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 10px 10px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .steps {
+                flex-direction: column;
+            }
+
+            #chatbotWindow {
+                width: 90%;
+                right: 5%;
+                max-height: 70vh;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="https://img.icons8.com/fluency/48/000000/money-bag-bitcoin.png" alt="CreditAI Logo">
+                CreditAI
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 class="fade-in">Smart Credit Score Advice Powered by AI</h1>
+            <p class="fade-in delay-1">Get personalized credit improvement recommendations, understand your credit report, and achieve your financial goals with our intelligent advisor.</p>
+            <div class="hero-buttons fade-in delay-2">
+                <a href="#signup" class="btn btn-primary">Get Started</a>
+                <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
+            </div>
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Credit Score Dashboard" class="hero-image fade-in delay-3" alt="Credit Score Dashboard" class="hero-image fade-in delay-3">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Choose CreditAI</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Our advanced AI examines your credit profile to provide tailored recommendations for improvement.</p>
+                </div>
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Score Simulation</h3>
+                    <p>See how different financial decisions could impact your credit score before you make them.</p>
+                </div>
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Fraud Detection</h3>
+                    <p>Get alerts about potential fraud or errors on your credit report that could be hurting your score.</p>
+                </div>
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Action Plan</h3>
+                    <p>Receive a step-by-step action plan with timelines to help you reach your credit goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title fade-in">How It Works</h2>
+            <div class="steps">
+                <div class="step fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Connect Your Accounts</h3>
+                    <p>Securely link your credit cards, loans, and bank accounts (read-only access).</p>
+                </div>
+                <div class="step fade-in delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Get Your Analysis</h3>
+                    <p>Our AI analyzes your credit profile and identifies key areas for improvement.</p>
+                </div>
+                <div class="step fade-in delay-2">
+                    <div class="step-number">3</div>
+                    <h3>Receive Recommendations</h3>
+                    <p>Get personalized advice on how to boost your score and maintain good credit.</p>
+                </div>
+                <div class="step fade-in delay-3">
+                    <div class="step-number">4</div>
+                    <h3>Track Your Progress</h3>
+                    <p>Monitor your credit score changes and see the impact of your financial decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title fade-in">What Our Users Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-text">
+                        "CreditAI helped me understand why my credit score was stuck. Following their recommendations, I increased my score by 80 points in just 4 months!"
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/50x50" alt="Sarah J." class="author-avatar">
+                        <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <p>San Francisco, CA</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in delay-1">
+                    <div class="testimonial-text">
+                        "The AI advisor spotted errors on my credit report I had missed. They walked me through the dispute process and now those errors are removed!"
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/50x50" alt="Michael T." class="author-avatar">
+                        <div class="author-info">
+                            <h4>Michael T.</h4>
+                            <p>Chicago, IL</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in delay-2">
+                    <div class="testimonial-text">
+                        "As someone new to credit, I found the explanations and simulations incredibly helpful. I went from no credit to a 720 score in under a year."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://via.placeholder.com/50x50" alt="David L." class="author-avatar">
+                        <div class="author-info">
+                            <h4>David L.</h4>
+                            <p>Austin, TX</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign Up Section -->
+    <section class="auth-section" id="signup">
+        <div class="container">
+            <div class="auth-form fade-in" id="signupForm">
+                <h3>Create Your Account</h3>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                </form>
+                <div class="form-footer">
+                    Already have an account? <a href="#" id="showLogin">Sign In</a>
+                </div>
+            </div>
+
+            <div class="auth-form fade-in" id="loginForm" style="display: none;">
+                <h3>Welcome Back</h3>
+                <form id="signinForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn">Sign In</button>
+                </form>
+                <div class="form-footer">
+                    Don't have an account? <a href="#" id="showRegister">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="https://via.placeholder.com/30x30" alt="CreditAI Logo">
+                        CreditAI
+                    </div>
+                    <p>Your intelligent credit score advisor, helping you understand, improve, and maintain excellent credit health.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Credit Score Guide</a></li>
+                        <li><a href="#">Financial Calculators</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Glossary</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to get credit tips and financial advice directly to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <p>We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CreditAI. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div id="chatbotIcon">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>CreditAI Assistant</h3>
+            <button id="closeChatbot"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chatbotMessages">
+            <div class="message bot-message">
+                Hello! I'm your CreditAI assistant. How can I help you with your credit score today?
+            </div>
+            <div class="message bot-message">
+                Here are some things I can help with: 💳<br><br>
+                • Understanding your credit score 📊<br>
+                • Improving your credit score 📈<br>
+                • Fixing credit report errors 🔍<br>
+                • Building credit from scratch 🏗️<br>
+                • Credit monitoring & protection 🛡️<br><br>
+                Just ask me anything! 😊
+            </div>
+        </div>
+        <div class="chatbot-input-container">
+            <input type="text" id="chatbotInput" placeholder="Ask me about credit scores...">
+            <button id="sendChatbotMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Form Toggle
+        const showLogin = document.getElementById('showLogin');
+        const showRegister = document.getElementById('showRegister');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+        });
+
+        // Form Submission
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for signing up! Redirecting to your dashboard...');
+            // In a real app, you would handle the form submission here
+        });
+
+        document.getElementById('signinForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Welcome back! Redirecting to your dashboard...');
+            // In a real app, you would handle the form submission here
+        });
+
+        // Chatbot Functionality with Google Gemini API
+        const chatbotIcon = document.getElementById("chatbotIcon");
+        const chatbotWindow = document.getElementById("chatbotWindow");
+        const closeChatbot = document.getElementById("closeChatbot");
+        const chatbotInput = document.getElementById("chatbotInput");
+        const sendChatbotMessage = document.getElementById("sendChatbotMessage");
+        const chatbotMessages = document.getElementById("chatbotMessages");
+        
+        // Google Gemini API configuration
+        const GOOGLE_API_KEY = 'AIzaSyDudnt6l_RVPTuwnnj0VqrtLq8WVDewrMY';
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GOOGLE_API_KEY}`;
+        
+        // Sample credit knowledge base
+        const creditKnowledge = {
+            "what is a credit score": "📊 A credit score is a 3-digit number (typically 300-850) that represents your creditworthiness. Lenders use it to evaluate how likely you are to repay debts. Higher scores = better loan terms! 💰",
+            
+            "how is your credit score calculated": "🧮 Your credit score is calculated using:\n\n• Payment history (35%) 💳\n• Credit utilization (30%) 📉\n• Credit age (15%) 🕰️\n• Credit mix (10%) 🎭\n• New credit (10%) 🆕\n\nEach scoring model (FICO, VantageScore) weighs these slightly differently.",
+            
+            "credit score ranges": "📈 Credit score ranges:\n\n• 300-579: Poor 😞\n• 580-669: Fair 😐\n• 670-739: Good 😊\n• 740-799: Very Good 👍\n• 800-850: Excellent 🎉\n\nHigher scores get you better interest rates!",
+            
+            "how to check your credit report": "🔍 You can check your credit report for FREE at AnnualCreditReport.com. By law, you get 1 free report from each bureau (Experian, Equifax, TransUnion) every year. Pro tip: Stagger them to monitor year-round! 📅",
+            
+            "tips for increasing your credit score": "🚀 Boost your score with these tips:\n\n1. Pay bills on time ⏰\n2. Keep credit utilization <30% 📉\n3. Don't close old accounts 🕰️\n4. Limit hard inquiries 🛑\n5. Diversify credit types 🎭\n6. Dispute errors on your report 🔍\n7. Become an authorized user 👪",
+            
+            "how to build credit without a credit card": "🛠️ No credit card? No problem! Try:\n\n• Credit-builder loans 🏦\n• Secured credit cards 💳\n• Reporting rent payments 🏠\n• Becoming an authorized user 👪\n• Utility bill reporting 💡\n\nStart small and build responsibly!",
+            
+            "common credit mistakes": "⚠️ Avoid these credit killers:\n\n• Maxing out credit cards 💣\n• Missing payments ❌\n• Applying for too much credit at once 🎯\n• Closing old accounts 🚪\n• Ignoring your credit report 🙈\n• Cosigning without caution ✍️",
+            
+            "how credit score affects loan interest rates": "💸 Your score DIRECTLY impacts rates! Example:\n\n• 760+ score: 3.5% APR 🎉\n• 700 score: 4.0% APR 🙂\n• 620 score: 5.0% APR 😕\n\nOn a $300k mortgage, that's $100k+ difference over 30 years!",
+            
+            "how to dispute incorrect information": "⚖️ Dispute errors in 6 steps:\n\n1. Get your credit report 📄\n2. Identify errors 🔍\n3. Gather evidence 📸\n4. Submit dispute to bureau(s) ✉️\n5. Follow up within 30 days 📅\n6. If unresolved, file CFPB complaint 🏛️",
+            
+            "credit monitoring tools": "🛡️ Top monitoring options:\n\n• Credit Karma (free) 🆓\n• Experian (free version) 🆓\n• myFICO (most comprehensive) 💯\n• Your bank's tools 🏦\n\nLook for: real-time alerts, score simulators, and dark web monitoring!"
+        };
+        
+        // Toggle chatbot window
+        chatbotIcon.addEventListener("click", () => {
+            chatbotWindow.style.display = "flex";
+        });
+        
+        closeChatbot.addEventListener("click", () => {
+            chatbotWindow.style.display = "none";
+        });
+        
+        // Send message function
+        function sendMessage() {
+            const message = chatbotInput.value.trim();
+            if (message === "") return;
+            
+            // Add user message to chat
+            addMessage(message, "user");
+            chatbotInput.value = "";
+            
+            // Check if we have a predefined response
+            const lowerMessage = message.toLowerCase();
+            let foundResponse = false;
+            
+            for (const [key, value] of Object.entries(creditKnowledge)) {
+                if (lowerMessage.includes(key)) {
+                    addMessage(value, "bot");
+                    foundResponse = true;
+                    break;
+                }
+            }
+            
+            // If no predefined response, use Gemini API
+            if (!foundResponse) {
+                addMessage("Thinking...", "bot");
+                
+                // Prepare the request for Gemini API
+                const requestBody = {
+                    contents: [{
+                        parts: [{
+                            text: `You are a helpful credit score advisor. Answer this question about credit scores in a professional but friendly manner: ${message}`
+                        }]
+                    }]
+                };
+                
+                fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestBody)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Remove "Thinking..." message
+                    chatbotMessages.removeChild(chatbotMessages.lastChild);
+                    
+                    // Add the actual response
+                    if (data.candidates && data.candidates[0].content.parts[0].text) {
+                        addMessage(data.candidates[0].content.parts[0].text, "bot");
+                    } else {
+                        addMessage("I couldn't find an answer to that. Could you try asking differently?", "bot");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error calling Gemini API:", error);
+                    chatbotMessages.removeChild(chatbotMessages.lastChild);
+                    addMessage("I'm having trouble connecting to the credit database. Please try again later.", "bot");
+                });
+            }
+        }
+        
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", `${sender}-message`);
+            messageDiv.textContent = text;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+        
+        // Event listeners for sending messages
+        sendChatbotMessage.addEventListener("click", sendMessage);
+        chatbotInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
